@@ -29,12 +29,11 @@ import sys
 #if len(sys.argv) != 2:
   #  print('Use: '+sys.argv[0]+' archivo.txt')
     #sys.exit(1)
-s='banana'
+#s='banana'
 
 #Momentanio, solucion sacada de google
 
-txt = open(sys.argv[1])
-fulltext = txt.read()
+
 
 # recordar cambiarlo
 def suffixArray(s):
@@ -42,8 +41,8 @@ def suffixArray(s):
     suffixes.sort(key=lambda x: x[0]) #nlog(n)
     return [s[1] for s in suffixes] #o(n)
 
-array =  suffixArray(fulltext)
-print(array)
+#array =  suffixArray(fulltext)
+#print(array)
 
 """ def search_in_array(phrase, full_text, suffix_array):
     
@@ -100,4 +99,5 @@ def search_all(array, phrase, seq):
 
     return array[first:last]
 
-print(search_all(array, "platano", fulltext))
+#print(search_all(array, "platano", fulltext))
+
