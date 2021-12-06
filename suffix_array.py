@@ -60,8 +60,8 @@ def search_all(sa, phrase, fulltext):
     '''
     l = 0
     r = len(sa)
-    while l < r: 
-        mid = (l+r)//2 #set the middle to binary search
+    while l < r:  #We do a binary search
+        mid = (l+r)//2 
         if fulltext[sa[mid]:] < phrase:
             l = mid+1
         else:
@@ -70,13 +70,10 @@ def search_all(sa, phrase, fulltext):
     def match_at(i):
         return fulltext[i: i + len(phrase)] == phrase
 
-    # array[lo] is one match
-    # now we walk backwards to find the first match
     first = l
     while first > 0 and match_at(sa[first - 1]):
         first -= 1
 
-    # and walk forwards to find the last match
     last = r
     while match_at(sa[last]):
         last += 1
