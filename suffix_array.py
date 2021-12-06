@@ -26,37 +26,15 @@ and the suffix array is completed as shown:
 
 import sys
 
-#if len(sys.argv) != 2:
-  #  print('Use: '+sys.argv[0]+' archivo.txt')
-    #sys.exit(1)
-#s='banana'
-
-#Momentanio, solucion sacada de google
-
-
 
 # recordar cambiarlo
 def suffixArray(s):
+    '''
+    Given a string, the function returns the suffix_array of the string
+    '''
     suffixes = [(s[i:], i) for i in range(len(s))] # o(n)
     suffixes.sort(key=lambda x: x[0]) #nlog(n)
     return [s[1] for s in suffixes] #o(n)
-
-#array =  suffixArray(fulltext)
-#print(array)
-
-""" def search_in_array(phrase, full_text, suffix_array):
-    
-    left = 0
-    right = len(suffix_array)-1
-    while(right>=left):
-        mid = (left+right)//2
-        if fulltext[suffix_array[mid]:]<phrase:
-            left = mid + 1 
-        else:
-            right = mid
-    if not full_text[suffix_array[left]:].startwith(phrase):
-        print("Not found")
-    return suffix_array[left] """
 
 def search_in_array(sa, phrase, text):
     left = 0
@@ -73,31 +51,33 @@ def search_in_array(sa, phrase, text):
     return sa[left]
 
 
-def search_all(array, phrase, seq):
+def search_all(sa, phrase, fulltext):
+    '''
+    parameters: suffix array, phrase, full text
+    Given a suffix array, a phrase and the full text
+    The function uses binary search to find all the ocurrencies of the phrase in the text 
+    returns an array of indexes of the phrase found in the text
+    '''
     l = 0
-    r = len(array)
-    while l < r: 
-        mid = (l+r)//2 #set the middle to binary search
-        if seq[array[mid]:] < phrase:
+    r = len(sa)
+    while l < r:  #We do a binary search
+        mid = (l+r)//2 
+        if fulltext[sa[mid]:] < phrase:
             l = mid+1
         else:
             r = mid
 
     def match_at(i):
-        return seq[i: i + len(phrase)] == phrase
+        return fulltext[i: i + len(phrase)] == phrase
 
-    # array[lo] is one match
-    # now we walk backwards to find the first match
     first = l
-    while first > 0 and match_at(array[first - 1]):
+    while first > 0 and match_at(sa[first - 1]):
         first -= 1
 
-    # and walk forwards to find the last match
     last = r
-    while match_at(array[last]):
+    while match_at(sa[last]):
         last += 1
 
-    return array[first:last]
+    return sa[first:last]
 
-#print(search_all(array, "platano", fulltext))
 
