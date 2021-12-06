@@ -4,7 +4,6 @@ import sys
 txt = open(sys.argv[1])
 fulltext = txt.read()
 array =  sa.suffixArray(fulltext)
-
 print("------------------------------------------")
 while True:
     word = input("What word do you want to search?")
