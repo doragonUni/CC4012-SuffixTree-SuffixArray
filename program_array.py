@@ -3,12 +3,7 @@ import sys
 
 txt = open(sys.argv[1]) #The text is given when the file is called
 fulltext = txt.read()
-<<<<<<< HEAD
-array =  sa.suffixArray(fulltext)
-=======
 s_array =  sa.suffixArray(fulltext)
-
->>>>>>> d759988d9903ad11dfdde494d27d2b6ed36bead4
 print("------------------------------------------")
 while True:
     print("Press Enter to exit")
