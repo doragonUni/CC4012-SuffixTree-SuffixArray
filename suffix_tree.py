@@ -43,10 +43,10 @@ class Trie(object):
         node.is_end = True
         node.counter += 1
         
-root = Trie()
-root.insert("caca")
-print(root)
-root.insert("camaleon")
-print(root)
-root.insert("dama")
-print(root)
+#root = Trie()
+#root.insert("caca")
+#print(root)
+#root.insert("camaleon")
+#print(root)
+#root.insert("dama")
+#print(root)
