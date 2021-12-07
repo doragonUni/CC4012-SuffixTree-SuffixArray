@@ -79,5 +79,3 @@ def search_all(sa, phrase, fulltext):
         last += 1
 
     return sa[first:last]
-
-

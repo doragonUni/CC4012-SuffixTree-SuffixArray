@@ -20,5 +20,3 @@ while True:
             text=fulltext[c:c+20]
         print("> "+text)
     print("------------------------------------------")
-
-
