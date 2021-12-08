@@ -1,5 +1,5 @@
 
-class TrieNode(object):
+class TrieNode():
     def __init__(self, char):
         self.char = char
         self.children = {}
@@ -23,7 +23,7 @@ class TrieNode(object):
         else: return ''
 
 
-class Trie(object):
+class Trie():
     def __init__(self):
         self.root = TrieNode("")
 
