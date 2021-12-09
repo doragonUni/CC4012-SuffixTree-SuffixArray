@@ -3,7 +3,8 @@ import sys
 
 txt = open(sys.argv[1]) #The text is given when the file is called
 fulltext = txt.read()
-s_array =  sa.suffixArray(fulltext)
+#s_array =  sa.suffixArray(fulltext)
+s_array = sa.buildSuffixArray(fulltext)
 print("------------------------------------------")
 while True:
     print("Press Enter to exit")
