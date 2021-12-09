@@ -2,6 +2,7 @@ class patricia():
     def __init__(self):
         self.tuple = ["", 0]
         self.data = {}
+        self.pre_count_leaf = 0
 
     def insert(self, word):
         data = self.data
@@ -16,8 +17,8 @@ class patricia():
                     if word[i:i+1] == '':
                         return
                     else:
-                        if i != 0:
-                            data[''] = ['',{}]
+                        #if i != 0:
+                            #data[''] = ['',{}]
                         data[word[i:i+1]] = [word[i+1:],{}]
                 return
 
@@ -47,56 +48,12 @@ class patricia():
                 data[word[i-1:i]] = [node[0][:j],tmpdata]
                 return
 
-    def isWord(self,word):
-        data = self.data
-        i = 0
-        while 1:
-            try:
-                node = data[word[i:i+1]]
-            except KeyError:
-                return False
-            i += 1
-            if word.startswith(node[0],i):
-                if len(word[i:]) == len(node[0]):
-                    if node[1]:
-                        try:
-                            node[1]['']
-                        except KeyError:
-                            return False
-                    return True
-                else:
-                    i += len(node[0])
-                    data = node[1]
-            else:
-                return False
+    
+    
 
-    def isPrefix(self,word):
-        data = self.data
-        i = 0
-        wordlen = len(word)
-        while 1:
-            try:
-                node = data[word[i:i+1]]
-            except KeyError:
-                return False
-            i += 1
-            if word.startswith(node[0][:wordlen-i],i):
-                if wordlen - i > len(node[0]):
-                    i += len(node[0])
-                    data = node[1]
-                else:
-                    return True
-            else:
-                return False
 
-    def __str__(self, level=0):
-        img = "\t"*level + "\n"
-        for child in self.data.keys():
-            img += self.data[child][1].__str__(level+1)
-        return img
 
-    def __repr__(self, branch):
-        return branch
+
 
 
 p = patricia()
@@ -104,5 +61,18 @@ words = ['foo','bar','baz', 'food']
 for x in words:
     p.insert(x)
 
+
+def pre_count_leaf(data):
+    print(data)
+    if data == {}:
+        print("llegue a una hoja")
+        return 1
+
+    count = 0
+    for k in data.keys():
+        count += pre_count_leaf(data[k][1])
+    return count
+
 print(p.data)
-print(p)
+print(pre_count_leaf(p.data))
+
