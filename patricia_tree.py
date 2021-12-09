@@ -3,6 +3,7 @@ class PatriciaNode():
         self.word = ""
         self.children = {}
         self.count_sons=0
+        self.most_popular = None
 
     def pre_count_sons(self):
         if self.children=={}:
@@ -10,12 +11,30 @@ class PatriciaNode():
             return 1
         count=0
         for k in self.children.keys():
-            sum =self.children[k].pre_count_sons()
+            sum = self.children[k].pre_count_sons()
             if sum == None:
                 sum = 0
             count+=sum
         self.count_sons=count
         return count
+
+    def pre_most_popular(self):
+        if self.children=={}:
+            self.most_popular=self
+            return self
+        most = None
+        for k in self.children.keys():
+            popular = self.children[k].pre_most_popular()
+            if most==None:
+                most=popular
+            elif popular.count_sons>most.count_sons:
+                most=popular
+        self.most_popular=most
+        return most
+
+
+
+
         
 
 
@@ -75,6 +94,8 @@ class patricia():
 
     def pre_count_sons(self):
         self.root.pre_count_sons()
+    def pre_most_popular(self):
+        self.root.pre_most_popular()
 
 
 
@@ -86,7 +107,7 @@ for x in words:
     p.insert(x)
 
 p.pre_count_sons()
-
-
-print(p.root.children['b'].count_sons)
+p.pre_most_popular()
+print(p.root.most_popular.word)
+#print(p.root.children['b'].count_sons)
 
