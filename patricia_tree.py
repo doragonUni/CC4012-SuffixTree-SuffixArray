@@ -17,7 +17,14 @@ class PatriciaNode():
         self.count_sons=count
         return count
         
+    def __str__(self, level, branch):
+        ret = "\t"*level+ branch + self.word + "(" + str(self.count_sons) + ")" + "\n"
+        for child in self.children.keys():
+            ret += self.children[child].__str__(level+1, child)
+        return ret
 
+    def __repr__(self):
+        return '<>'
 
 class patricia():
     def __init__(self):
@@ -72,21 +79,24 @@ class patricia():
                 children[word[i-1:i]] = new_node
                 return
             
-
     def pre_count_sons(self):
         self.root.pre_count_sons()
 
+    def __str__(self, level=0):
+        ret = "\t"*level+ "''" + "(" + str(self.root.count_sons) + ")" + "\n"
+        for child in self.root.children.keys():
+            ret += self.root.children[child].__str__(level+1, child)
+        return ret
 
-
+    def __repr__(self):
+        return '<>'
 
 
 p = patricia()
-words = ['foo','bar','baz', 'food']
+words = ['foo','bar','baz', 'football']
 for x in words:
     p.insert(x)
 
 p.pre_count_sons()
-
-
 print(p.root.children['b'].count_sons)
-
+print(p)
