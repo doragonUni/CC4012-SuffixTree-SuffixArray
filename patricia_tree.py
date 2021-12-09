@@ -1,56 +1,80 @@
+class PatriciaNode():
+    def __init__(self):
+        self.word = ""
+        self.children = {}
+        self.count_sons=0
+
+    def pre_count_sons(self):
+        if self.children=={}:
+            self.count_sons=0
+            return 1
+        count=0
+        for k in self.children.keys():
+            sum =self.children[k].pre_count_sons()
+            if sum == None:
+                sum = 0
+            count+=sum
+        self.count_sons=count
+        return count
+        
+
+
 class patricia():
     def __init__(self):
-        self.tuple = ["", 0]
-        self.data = {}
-        self.pre_count_leaf = 0
+        self.root = PatriciaNode()
 
     def insert(self, word):
-        data = self.data
+        children = self.root.children
         i = 0
+        
         while 1:
             try:
-                node = data[word[i:i+1]]
+                char= word[i:i+1]
+                node = children[char] 
             except KeyError:
-                if data:
-                    data[word[i:i+1]] = [word[i+1:],{}]
-                else:
-                    if word[i:i+1] == '':
+                if char == '':
                         return
-                    else:
-                        #if i != 0:
-                            #data[''] = ['',{}]
-                        data[word[i:i+1]] = [word[i+1:],{}]
+                else: 
+                    new_node = PatriciaNode()
+                    new_node.word = word[i+1:]
+                    children[char] = new_node
                 return
 
             i += 1
-            if word.startswith(node[0],i):
-                if len(word[i:]) == len(node[0]):
-                    if node[1]:
-                        try:
-                            node[1]['']
-                        except KeyError:
-                            data = node[1]
-                            data[''] = ['',{}]
+            if word.startswith(node.word,i):
+                if len(word[i:]) == len(node.word):
                     return
                 else:
-                    i += len(node[0])
-                    data = node[1]
+                    i += len(node.word)
+                    children = node.children
             else:
                 ii = i
                 j = 0
-                while ii != len(word) and j != len(node[0]) and \
-                      word[ii:ii+1] == node[0][j:j+1]:
+                while ii != len(word) and j != len(node.word) and \
+                      word[ii:ii+1] == node.word[j:j+1]:
                     ii += 1
                     j += 1
+
                 tmpdata = {}
-                tmpdata[node[0][j:j+1]] = [node[0][j+1:],node[1]]
-                tmpdata[word[ii:ii+1]] = [word[ii+1:],{}]
-                data[word[i-1:i]] = [node[0][:j],tmpdata]
+                new_node = PatriciaNode()
+                new_node.word=node.word[j+1:]
+                new_node.children=node.children
+                tmpdata[node.word[j:j+1]] = new_node
+
+                if word[ii:ii+1]!="":
+                    new_node = PatriciaNode()
+                    new_node.word=word[ii+1:]
+                    tmpdata[word[ii:ii+1]] = new_node
+
+                new_node = PatriciaNode()
+                new_node.word = node.word[:j]
+                new_node.children = tmpdata
+                children[word[i-1:i]] = new_node
                 return
+            
 
-    
-    
-
+    def pre_count_sons(self):
+        self.root.pre_count_sons()
 
 
 
@@ -61,18 +85,8 @@ words = ['foo','bar','baz', 'food']
 for x in words:
     p.insert(x)
 
+p.pre_count_sons()
 
-def pre_count_leaf(data):
-    print(data)
-    if data == {}:
-        print("llegue a una hoja")
-        return 1
 
-    count = 0
-    for k in data.keys():
-        count += pre_count_leaf(data[k][1])
-    return count
-
-print(p.data)
-print(pre_count_leaf(p.data))
+print(p.root.children['b'].count_sons)
 
