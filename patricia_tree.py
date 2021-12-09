@@ -26,7 +26,7 @@ class PatriciaNode():
     def __repr__(self):
         return '<>'
 
-class patricia():
+class Patricia():
     def __init__(self):
         self.root = PatriciaNode()
 
@@ -92,7 +92,7 @@ class patricia():
         return '<>'
 
 
-p = patricia()
+p = Patricia()
 words = ['foo','bar','baz', 'football']
 for x in words:
     p.insert(x)
