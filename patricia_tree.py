@@ -1,8 +1,9 @@
 class patricia():
     def __init__(self):
+        self.tuple = ["", 0]
         self.data = {}
 
-    def addWord(self, word):
+    def insert(self, word):
         data = self.data
         i = 0
         while 1:
@@ -88,50 +89,20 @@ class patricia():
             else:
                 return False
 
-    def removeWord(self,word):
-        data = self.data
-        i = 0
-        while 1:
-            try:
-                node = data[word[i:i+1]]
-            except KeyError:
-                print("Word is not in trie.")
-                return
-            i += 1
-            if word.startswith(node[0],i):
-                if len(word[i:]) == len(node[0]):
-                    if node[1]:
-                        try:
-                            node[1]['']
-                            node[1].pop('')
-                        except KeyError:
-                            print("Word is not in trie.")
-                        return
-                    data.pop(word[i-1:i])
-                    return
-                else:
-                    i += len(node[0])
-                    data = node[1]
-            else:
-                print("Word is not in trie.")
-                return
-
-    __getitem__ = isWord
-
-    def __str__(self, level=0, branch=""):
-        img = "\t"*level + self.__repr__(branch) + "\n"
-        for child in self.data:
-            img += self.data[child].__str__(level+1, child)
+    def __str__(self, level=0):
+        img = "\t"*level + "\n"
+        for child in self.data.keys():
+            img += self.data[child][1].__str__(level+1)
         return img
 
     def __repr__(self, branch):
-        return str(branch)
+        return branch
 
 
 p = patricia()
 words = ['foo','bar','baz', 'food']
 for x in words:
-    p.addWord(x)
+    p.insert(x)
 
 print(p.data)
 print(p)
