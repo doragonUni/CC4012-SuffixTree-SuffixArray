@@ -50,7 +50,26 @@ class AppDemo(QWidget):
 
         self.console = QTextEdit()
         self.console.setFont(fnt)
-        #self.console.append(str(root))
+
+        message = "\n \n \n"
+        message += f'''
+        ---------------------------------------------------------------
+        -- Bienvenido al widget de búsqueda de sufijos --
+        ---------------------------------------------------------------
+
+        1 - Para buscar, solo comience a escribir en el
+            input ubicado en la parte superior del
+            widget
+        2 - La aplicación le indicará las recomendaciones
+            de llenado utilizando un suffix_tree
+
+        archivo cargado: {sys.argv[1]}
+        ---------------------------------------------------------------
+        ----------------------- Authors -----------------------------
+           Nicolás García -- Javier Lavados -- Lung Pang    
+        ---------------------------------------------------------------
+        '''
+        self.console.append(message)
         mainLayout.addWidget(self.console)
 
         self.setLayout(mainLayout)
