@@ -36,7 +36,7 @@ class AppDemo(QWidget):
         self.input.setFont(fnt)
         mainLayout.addWidget(self.input)
 
-        
+        self.autocomplete_model = QStandardItemModel()
         self.setWords()
         
 
@@ -54,13 +54,11 @@ class AppDemo(QWidget):
         self.input.textChanged.connect(self.onChanged)
         self.show()
     
-    def setWords(self):
+    def setWords(self,):
         a=self.input.text()
-        print(a)
         autocomplete_list = ["caca_"+str(a),"caca_"+str(a),"caca_"+str(a)]
-        self.autocomplete_model = QStandardItemModel()
-        for text in autocomplete_list:
-            self.autocomplete_model.appendRow(QStandardItem(text))
+        for i in range(0,3):
+            self.autocomplete_model.setItem(i,QStandardItem(autocomplete_list[i]))
 
 
     def onChanged(self, text):
