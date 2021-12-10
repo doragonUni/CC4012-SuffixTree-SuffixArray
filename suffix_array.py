@@ -9,7 +9,12 @@ class suffix:
     def get_index(self):
         return self.index
 
-def suffix_array(text):
+def suffix_array(text:str):
+    '''
+    Given a string, the function create an array of suffix() which length is equal to the len of the text
+    then we sort it base on the suffix and returns the suffix array of it.
+
+    '''
     text_len = len(text)
 
     suffixes = [suffix() for _ in range(text_len)]
