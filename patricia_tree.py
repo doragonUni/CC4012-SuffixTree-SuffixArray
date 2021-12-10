@@ -106,7 +106,7 @@ class Patricia():
         return 0
 
     def __str__(self, level=0):
-        ret = "\t"*level+ "''" + "(" + str(self.root.count_sons) + ")" + "\n"
+        ret = "\t"*level+ "_(" + str(self.root.count_sons) + ")" + "\n"
         for child in self.root.children.keys():
             ret += self.root.children[child].__str__(level+1, child)
         return ret
@@ -115,6 +115,7 @@ class Patricia():
         return '<>'
 
 '''
+## Texto de ejemplo
 p = Patricia()
 words = ['bar$','baz$', 'foo$', 'football$']
 for x in words:
@@ -124,5 +125,4 @@ p.pre_count_sons()
 p.pre_most_popular()
 print(p.root.most_popular)
 print(p)
-
 '''
