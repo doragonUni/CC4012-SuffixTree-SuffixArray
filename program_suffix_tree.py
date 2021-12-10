@@ -6,6 +6,10 @@ import suffix_array as sa
 import time
 
 
+if len(sys.argv) != 2:
+    print('Use: '+sys.argv[0]+' archivo.txt')
+    sys.exit(1)
+
 # Recibimos y leimos el archivo de texto
 txt = open(sys.argv[1])
 fulltext = txt.read()
@@ -46,7 +50,7 @@ class AppDemo(QWidget):
 
         self.console = QTextEdit()
         self.console.setFont(fnt)
-        self.console.append(str(root))
+        #self.console.append(str(root))
         mainLayout.addWidget(self.console)
 
         self.setLayout(mainLayout)
@@ -54,7 +58,7 @@ class AppDemo(QWidget):
         self.input.textChanged.connect(self.onChanged)
         self.show()
     
-    def setWords(self):
+    def setWords(self): # funcion que actualiza las palabras para el autocompletado
         text=self.input.text()
         result=root.autocompletar(text)
         print(result)
@@ -65,7 +69,7 @@ class AppDemo(QWidget):
                 message =text+result[i]
                 self.autocomplete_model.setItem(i,QStandardItem(message))
 
-    def onChanged(self, text):
+    def onChanged(self, text): # cada vez que el el texto cambia, se cambia las palabras sugeridas
         self.setWords()
 
 if __name__ == '__main__':
