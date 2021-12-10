@@ -1,4 +1,4 @@
-import suffix_test as sa
+import suffix_array as sa
 import sys
 
 txt = open(sys.argv[1]) #The text is given when the file is called

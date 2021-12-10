@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTextEdit, QLine
 from PyQt5.QtGui import QStandardItem, QStandardItemModel, QFont
 import patricia_tree as pt
 import suffix_array as sa
+import time
+
 
 # Recibimos y leimos el archivo de texto
 txt = open(sys.argv[1])
@@ -34,11 +36,9 @@ class AppDemo(QWidget):
         self.input.setFont(fnt)
         mainLayout.addWidget(self.input)
 
-        last_input = self.input
-        autocomplete_list = []
-        self.autocomplete_model = QStandardItemModel()
-        for text in autocomplete_list:
-            self.autocomplete_model.appendRow(QStandardItem(text))
+        
+        self.setWords()
+        
 
         self.completer = QCompleter()
         self.completer.setModel(self.autocomplete_model)
@@ -51,8 +51,23 @@ class AppDemo(QWidget):
 
         self.setLayout(mainLayout)
 
-####### Aplication
-app = QApplication(sys.argv)
-demo = AppDemo()
-demo.show()
-sys.exit(app.exec_())
+        self.input.textChanged.connect(self.onChanged)
+        self.show()
+    
+    def setWords(self):
+        a=self.input.text()
+        print(a)
+        autocomplete_list = ["caca_"+str(a),"caca_"+str(a),"caca_"+str(a)]
+        self.autocomplete_model = QStandardItemModel()
+        for text in autocomplete_list:
+            self.autocomplete_model.appendRow(QStandardItem(text))
+
+
+    def onChanged(self, text):
+        print("Cambiare")
+        self.setWords()
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = AppDemo()
+    sys.exit(app.exec_())
