@@ -20,20 +20,19 @@ class PatriciaNode():
 
     def pre_most_popular(self):
         if self.children=={}:
-            self.most_popular=self
-            return self
+            self.most_popular = self
+            return
         most = None
         for k in self.children.keys():
-            popular = self.children[k].pre_most_popular()
-            if most == None:
+            self.children[k].pre_most_popular()
+            popular = self.children[k]
+            if most == None or popular.count_sons > most.count_sons:
                 most = popular
-            elif popular.count_sons > most.count_sons:
-                most = popular
-        self.most_popular=most
-        return most
+        self.most_popular = most
+        return
 
-    def autocompletar():
-        return 0
+    def autocompletar(self, char):
+        return
 
     def __str__(self, level=0, branch=""):
         ret = "\t"*level+ branch + self.word + "(" + str(self.count_sons) + ")" + "\n"
@@ -115,8 +114,9 @@ class Patricia():
     def __repr__(self):
         return '<>'
 
+'''
 p = Patricia()
-words = ['foo$','bar$','baz$', 'football$']
+words = ['bar$','baz$', 'foo$', 'football$']
 for x in words:
     p.insert(x)
 
@@ -124,3 +124,5 @@ p.pre_count_sons()
 p.pre_most_popular()
 print(p.root.most_popular)
 print(p)
+
+'''
