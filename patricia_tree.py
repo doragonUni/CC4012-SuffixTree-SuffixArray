@@ -114,17 +114,69 @@ class Patricia():
                 return False
             i += 1
             if word.startswith(node.word,i):
-                if wordlen - i > len(node.word):
+                if len(word[i:]) == len(node.word):
+                    return
+                else:
                     i += len(node.word)
                     children = node.children
-                else:
-                    return True
             else:
                 return False
     
+    def getThreeMost(self,children):
+
+        hijos=[]
+        values=[]
+        for k in children.keys():
+            if k != "$":
+                values.append(children[k].count_sons)
+                hijos.append(k)
+        hijos.sort()
+        if len(hijos)>3:
+            return hijos[0:3]
+        else:
+            while len(hijos)<2:
+                hijos.append("")
+            return hijos
 
 
+            
 
+    def autocompletar(self,text):
+        children = self.root.children
+        i = 0
+        while 1:
+            try:
+                char= text[i:i+1] #la letra i
+                node = children[char] 
+
+            except KeyError:
+                print(">No tengo sugerencia")
+                return ["","",""] # no tengo na que sugerir
+            i += 1
+            if text.startswith(node.word,i): # aca puede ser igual o mas grande
+                if len(text[i:]) == len(node.word): #nana.(nana)
+                    print(">Tenemos las siguientes 3 sugerencias")
+                    a=self.getThreeMost(node.children)
+                    return a
+                else:
+                    #print("debo seguir buscando") #nana.(na)
+                    i += len(node.word)
+                    children = node.children
+            else:
+                
+                ii = i
+                j = 0
+                while ii != len(text) and j != len(node.word) and \
+                      text[ii:ii+1] == node.word[j:j+1]:
+                    ii += 1
+                    j += 1
+                value = node.word[j:j+1]
+                if value == "$":
+                    print(">No tengo sugerencia")
+                    return ["","",""]
+                print(">Te sugiero seguir con la siguiente letra")
+                return [value,"",""]
+                
     def __str__(self, level=0):
         ret = "\t"*level+ "_(" + str(self.root.count_sons) + ")" + "\n"
         for child in self.root.children.keys():
@@ -137,12 +189,15 @@ class Patricia():
 
 ## Texto de ejemplo
 p = Patricia()
-words = ['bar$','baz$', 'foo$', 'football$']
+words = ['bar$','baz$', 'foo$', 'football$','footballer$', 'footsal$', 'footaa$', 'footballes$']
 for x in words:
     p.insert(x)
 
-p.pre_count_sons()
-p.pre_most_popular()
-print(p.root.most_popular)
+#p.pre_count_sons()
+#p.pre_most_popular()
+#print(p.root.most_popular)
 print(p)
-print(p.search('f'))
+#print(p.search('f'))
+
+print("--------------------")
+print(p.autocompletar("footb"))

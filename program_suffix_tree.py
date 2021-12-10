@@ -54,15 +54,18 @@ class AppDemo(QWidget):
         self.input.textChanged.connect(self.onChanged)
         self.show()
     
-    def setWords(self,):
-        a=self.input.text()
-        autocomplete_list = ["caca_"+str(a),"caca_"+str(a),"caca_"+str(a)]
-        for i in range(0,3):
-            self.autocomplete_model.setItem(i,QStandardItem(autocomplete_list[i]))
-
+    def setWords(self):
+        text=self.input.text()
+        result=root.autocompletar(text)
+        print(result)
+        for i in range(0,len(result)):
+            if result[i]=="":
+                self.autocomplete_model.setItem(i,QStandardItem(""))
+            else:
+                message =text+result[i]
+                self.autocomplete_model.setItem(i,QStandardItem(message))
 
     def onChanged(self, text):
-        print("Cambiare")
         self.setWords()
 
 if __name__ == '__main__':
