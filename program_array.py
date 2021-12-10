@@ -22,8 +22,9 @@ while True:
         suffix = c.get_suffix()
         lentext = len(suffix)
         if lentext > 5:
-            text = fulltext[c.get_index()-5:c.get_index()+lentext+5]
+            text = fulltext[c.get_index()-5:c.get_index()+len(word)+10]
         else:
             text =  c.get_suffix()
         print("> "+text)
+    print("We found "+str(len(occurrences))+ " occurrences","\n")
     print("------------------------------------------")
