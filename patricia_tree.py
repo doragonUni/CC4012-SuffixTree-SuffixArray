@@ -102,8 +102,28 @@ class Patricia():
     def pre_most_popular(self):
         self.root.pre_most_popular()
 
-    def autocompletar():
-        return 0
+    def search(self, word):
+        children = self.root.children
+        i = 0
+        wordlen = len(word)
+        while 1:
+            try:
+                char= word[i:i+1]
+                node = children[char] 
+            except KeyError:
+                return False
+            i += 1
+            if word.startswith(node.word,i):
+                if wordlen - i > len(node.word):
+                    i += len(node.word)
+                    children = node.children
+                else:
+                    return True
+            else:
+                return False
+    
+
+
 
     def __str__(self, level=0):
         ret = "\t"*level+ "_(" + str(self.root.count_sons) + ")" + "\n"
@@ -114,7 +134,7 @@ class Patricia():
     def __repr__(self):
         return '<>'
 
-'''
+
 ## Texto de ejemplo
 p = Patricia()
 words = ['bar$','baz$', 'foo$', 'football$']
@@ -125,4 +145,4 @@ p.pre_count_sons()
 p.pre_most_popular()
 print(p.root.most_popular)
 print(p)
-'''
+print(p.search('f'))
